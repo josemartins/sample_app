@@ -2,23 +2,20 @@ require 'spec_helper'
 
 describe "Static pages" do
 
-  describe "Home page" do
+  subject { page }
 
-    it "should have the h1 'Sample App'" do
-      visit '/static_pages/home'
-      page.should have_selector('h1', :text => 'Sample App')
-    end
-
-    it "should have the base title" do
-      visit '/static_pages/home'
-      page.should have_selector('title',
-                        :text => "Ruby on Rails Tutorial Sample App")
-    end
-
-    it "should not have a custom page title" do
-      visit '/static_pages/home'
-      page.should_not have_selector('title', :text => '| Home')
-    end
+  it "should have the right links on the layout" do
+    visit root_path
+    click_link "About"
+    page.should have_selector 'title', text: full_title('About Us')
+    click_link "Help"
+    page.should have_selector 'title', text: full_title('Help')
+    click_link "Contact"
+    page.should have_selector 'title', text: full_title('Contact')
+    click_link "Home"
+    click_link "Sign up now!"
+    page.should have_selector 'title', text: full_title('Sign up')
+    click_link "sample app"
+    page.should have_selector 'h1', text: 'Welcome to the Sample App'
   end
-  
 end
